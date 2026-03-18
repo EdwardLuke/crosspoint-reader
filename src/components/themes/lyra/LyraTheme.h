@@ -42,8 +42,8 @@ class LyraTheme : public BaseTheme {
  public:
   // Component drawing methods
   //   void drawProgressBar(const GfxRenderer& renderer, Rect rect, size_t current, size_t total) override;
-  void drawBatteryLeft(const GfxRenderer& renderer, Rect rect, bool showPercentage = true) const override;
-  void drawBatteryRight(const GfxRenderer& renderer, Rect rect, bool showPercentage = true) const override;
+  void drawBatteryLeft(const GfxRenderer& renderer, Rect rect, bool showPercentage = true, bool hideOnHighPercentage = false) const override;
+  void drawBatteryRight(const GfxRenderer& renderer, Rect rect, bool showPercentage = true, bool hideOnHighPercentage = false) const override;
   void drawHeader(const GfxRenderer& renderer, Rect rect, const char* title, const char* subtitle) const override;
   void drawSubHeader(const GfxRenderer& renderer, Rect rect, const char* label,
                      const char* rightLabel = nullptr) const override;

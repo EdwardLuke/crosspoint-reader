@@ -143,6 +143,9 @@ The Settings screen allows you to configure the device's behavior. There are a f
   - "Never" (default) - Always show battery percentage
   - "In Reader" - Show battery percentage everywhere except in reading mode
   - "Always" - Always hide battery percentage
+- **Show Battery Status**: Configure when to display the battery percentage display in the status bar; the battery icon will still be shown:
+  - "Always" (default) - Always show battery status
+  - "When Low" - Show battery percentage whenever the battery percentage falls below 20%
 - **Refresh Frequency**: Set how often the screen does a full refresh while reading to reduce ghosting; options are every 1, 5, 10, 15, or 30 pages.
 
 - **UI Theme**: Set which UI theme to use:

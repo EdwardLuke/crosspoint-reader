@@ -44,38 +44,44 @@ void drawBatteryIcon(const GfxRenderer& renderer, int x, int y, int battWidth, i
 }
 }  // namespace
 
-void BaseTheme::drawBatteryLeft(const GfxRenderer& renderer, Rect rect, const bool showPercentage) const {
+void BaseTheme::drawBatteryLeft(const GfxRenderer& renderer, Rect rect, const bool showPercentage, bool hideOnHighPercentage) const {
   // Left aligned: icon on left, percentage on right (reader mode)
   const uint16_t percentage = powerManager.getBatteryPercentage();
+  const bool hasLowBattery = percentage < 20;
   const int y = rect.y + 6;
 
-  if (showPercentage) {
-    const auto percentageText = std::to_string(percentage) + "%";
-    renderer.drawText(SMALL_FONT_ID, rect.x + batteryPercentSpacing + BaseMetrics::values.batteryWidth, rect.y,
-                      percentageText.c_str());
-  }
+  if (hasLowBattery || !hideOnHighPercentage) {
+    if (showPercentage) {
+      const auto percentageText = std::to_string(percentage) + "%";
+      renderer.drawText(SMALL_FONT_ID, rect.x + batteryPercentSpacing + BaseMetrics::values.batteryWidth, rect.y,
+                        percentageText.c_str());
+    }
 
-  drawBatteryIcon(renderer, rect.x, y, BaseMetrics::values.batteryWidth, rect.height, percentage);
+    drawBatteryIcon(renderer, rect.x, y, BaseMetrics::values.batteryWidth, rect.height, percentage);
+  }
 }
 
-void BaseTheme::drawBatteryRight(const GfxRenderer& renderer, Rect rect, const bool showPercentage) const {
+void BaseTheme::drawBatteryRight(const GfxRenderer& renderer, Rect rect, const bool showPercentage, bool hideOnHighPercentage) const {
   // Right aligned: percentage on left, icon on right (UI headers)
   // rect.x is already positioned for the icon (drawHeader calculated it)
   const uint16_t percentage = powerManager.getBatteryPercentage();
+  const bool hasLowBattery = percentage < 20;
   const int y = rect.y + 6;
 
-  if (showPercentage) {
-    const auto percentageText = std::to_string(percentage) + "%";
-    const int textWidth = renderer.getTextWidth(SMALL_FONT_ID, percentageText.c_str());
-    // Clear the area where we're going to draw the text to prevent ghosting
-    const auto textHeight = renderer.getTextHeight(SMALL_FONT_ID);
-    renderer.fillRect(rect.x - textWidth - batteryPercentSpacing, rect.y, textWidth, textHeight, false);
-    // Draw text to the left of the icon
-    renderer.drawText(SMALL_FONT_ID, rect.x - textWidth - batteryPercentSpacing, rect.y, percentageText.c_str());
-  }
+  if (hasLowBattery || !hideOnHighPercentage) {
+    if (showPercentage) {
+      const auto percentageText = std::to_string(percentage) + "%";
+      const int textWidth = renderer.getTextWidth(SMALL_FONT_ID, percentageText.c_str());
+      // Clear the area where we're going to draw the text to prevent ghosting
+      const auto textHeight = renderer.getTextHeight(SMALL_FONT_ID);
+      renderer.fillRect(rect.x - textWidth - batteryPercentSpacing, rect.y, textWidth, textHeight, false);
+      // Draw text to the left of the icon
+      renderer.drawText(SMALL_FONT_ID, rect.x - textWidth - batteryPercentSpacing, rect.y, percentageText.c_str());
+    }
 
-  // Icon is already at correct position from rect.x
-  drawBatteryIcon(renderer, rect.x, y, BaseMetrics::values.batteryWidth, rect.height, percentage);
+    // Icon is already at correct position from rect.x
+    drawBatteryIcon(renderer, rect.x, y, BaseMetrics::values.batteryWidth, rect.height, percentage);
+  }
 }
 
 void BaseTheme::drawProgressBar(const GfxRenderer& renderer, Rect rect, const size_t current,
@@ -680,11 +686,13 @@ void BaseTheme::drawStatusBar(GfxRenderer& renderer, const float bookProgress, c
   // Draw Battery
   const bool showBatteryPercentage =
       SETTINGS.hideBatteryPercentage == CrossPointSettings::HIDE_BATTERY_PERCENTAGE::HIDE_NEVER;
+  const bool hideOnHighPercentage =
+      SETTINGS.showBatteryStatus == CrossPointSettings::SHOW_BATTERY_STATUS::WHEN_LOW;
   if (SETTINGS.statusBarBattery) {
     GUI.drawBatteryLeft(renderer,
                         Rect{metrics.statusBarHorizontalMargin + orientedMarginLeft + 1, textY, metrics.batteryWidth,
                              metrics.batteryHeight},
-                        showBatteryPercentage);
+                        showBatteryPercentage, hideOnHighPercentage);
   }
 
   // Draw Title

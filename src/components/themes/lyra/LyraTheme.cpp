@@ -30,6 +30,7 @@
 // Internal constants
 namespace {
 constexpr int batteryPercentSpacing = 4;
+constexpr uint16_t lowBatteryPercentage = 20;
 constexpr int hPaddingInSelection = 8;
 constexpr int cornerRadius = 6;
 constexpr int topHintButtonY = 345;
@@ -40,6 +41,7 @@ constexpr int maxListValueWidth = 200;
 constexpr int mainMenuIconSize = 32;
 constexpr int listIconSize = 24;
 constexpr int mainMenuColumns = 2;
+
 int coverWidth = 0;
 
 const uint8_t* iconForName(UIIcon icon, int size) {
@@ -84,82 +86,88 @@ const uint8_t* iconForName(UIIcon icon, int size) {
 }
 }  // namespace
 
-void LyraTheme::drawBatteryLeft(const GfxRenderer& renderer, Rect rect, const bool showPercentage) const {
+void LyraTheme::drawBatteryLeft(const GfxRenderer& renderer, Rect rect, const bool showPercentage, bool hideOnHighPercentage) const {
   // Left aligned: icon on left, percentage on right (reader mode)
   const uint16_t percentage = powerManager.getBatteryPercentage();
+  const bool hasLowBattery = percentage < lowBatteryPercentage;
   const int y = rect.y + 6;
   const int battWidth = LyraMetrics::values.batteryWidth;
 
-  if (showPercentage) {
-    const auto percentageText = std::to_string(percentage) + "%";
-    renderer.drawText(SMALL_FONT_ID, rect.x + batteryPercentSpacing + battWidth, rect.y, percentageText.c_str());
-  }
+  if (hasLowBattery || !hideOnHighPercentage) {
+    if (showPercentage) {
+      const auto percentageText = std::to_string(percentage) + "%";
+      renderer.drawText(SMALL_FONT_ID, rect.x + batteryPercentSpacing + battWidth, rect.y, percentageText.c_str());
+    }
 
-  // Draw icon
-  const int x = rect.x;
-  // Top line
-  renderer.drawLine(x + 1, y, x + battWidth - 3, y);
-  // Bottom line
-  renderer.drawLine(x + 1, y + rect.height - 1, x + battWidth - 3, y + rect.height - 1);
-  // Left line
-  renderer.drawLine(x, y + 1, x, y + rect.height - 2);
-  // Battery end
-  renderer.drawLine(x + battWidth - 2, y + 1, x + battWidth - 2, y + rect.height - 2);
-  renderer.drawPixel(x + battWidth - 1, y + 3);
-  renderer.drawPixel(x + battWidth - 1, y + rect.height - 4);
-  renderer.drawLine(x + battWidth - 0, y + 4, x + battWidth - 0, y + rect.height - 5);
+    // Draw icon
+    const int x = rect.x;
+    // Top line
+    renderer.drawLine(x + 1, y, x + battWidth - 3, y);
+    // Bottom line
+    renderer.drawLine(x + 1, y + rect.height - 1, x + battWidth - 3, y + rect.height - 1);
+    // Left line
+    renderer.drawLine(x, y + 1, x, y + rect.height - 2);
+    // Battery end
+    renderer.drawLine(x + battWidth - 2, y + 1, x + battWidth - 2, y + rect.height - 2);
+    renderer.drawPixel(x + battWidth - 1, y + 3);
+    renderer.drawPixel(x + battWidth - 1, y + rect.height - 4);
+    renderer.drawLine(x + battWidth - 0, y + 4, x + battWidth - 0, y + rect.height - 5);
 
-  // Draw bars
-  if (percentage > 10) {
-    renderer.fillRect(x + 2, y + 2, 3, rect.height - 4);
-  }
-  if (percentage > 40) {
-    renderer.fillRect(x + 6, y + 2, 3, rect.height - 4);
-  }
-  if (percentage > 70) {
-    renderer.fillRect(x + 10, y + 2, 3, rect.height - 4);
+    // Draw bars
+    if (percentage > 10) {
+      renderer.fillRect(x + 2, y + 2, 3, rect.height - 4);
+    }
+    if (percentage > 40) {
+      renderer.fillRect(x + 6, y + 2, 3, rect.height - 4);
+    }
+    if (percentage > 70) {
+      renderer.fillRect(x + 10, y + 2, 3, rect.height - 4);
+    }
   }
 }
 
-void LyraTheme::drawBatteryRight(const GfxRenderer& renderer, Rect rect, const bool showPercentage) const {
+void LyraTheme::drawBatteryRight(const GfxRenderer& renderer, Rect rect, const bool showPercentage, bool hideOnHighPercentage) const {
   // Right aligned: percentage on left, icon on right (UI headers)
   const uint16_t percentage = powerManager.getBatteryPercentage();
+  const bool hasLowBattery = percentage < lowBatteryPercentage;
   const int y = rect.y + 6;
   const int battWidth = LyraMetrics::values.batteryWidth;
 
-  if (showPercentage) {
-    const auto percentageText = std::to_string(percentage) + "%";
-    const int textWidth = renderer.getTextWidth(SMALL_FONT_ID, percentageText.c_str());
-    // Clear the area where we're going to draw the text to prevent ghosting
-    const auto textHeight = renderer.getTextHeight(SMALL_FONT_ID);
-    renderer.fillRect(rect.x - textWidth - batteryPercentSpacing, rect.y, textWidth, textHeight, false);
-    // Draw text to the left of the icon
-    renderer.drawText(SMALL_FONT_ID, rect.x - textWidth - batteryPercentSpacing, rect.y, percentageText.c_str());
-  }
+  if (hasLowBattery || !hideOnHighPercentage) {
+    if (showPercentage) {
+      const auto percentageText = std::to_string(percentage) + "%";
+      const int textWidth = renderer.getTextWidth(SMALL_FONT_ID, percentageText.c_str());
+      // Clear the area where we're going to draw the text to prevent ghosting
+      const auto textHeight = renderer.getTextHeight(SMALL_FONT_ID);
+      renderer.fillRect(rect.x - textWidth - batteryPercentSpacing, rect.y, textWidth, textHeight, false);
+      // Draw text to the left of the icon
+      renderer.drawText(SMALL_FONT_ID, rect.x - textWidth - batteryPercentSpacing, rect.y, percentageText.c_str());
+    }
 
-  // Draw icon at rect.x
-  const int x = rect.x;
-  // Top line
-  renderer.drawLine(x + 1, y, x + battWidth - 3, y);
-  // Bottom line
-  renderer.drawLine(x + 1, y + rect.height - 1, x + battWidth - 3, y + rect.height - 1);
-  // Left line
-  renderer.drawLine(x, y + 1, x, y + rect.height - 2);
-  // Battery end
-  renderer.drawLine(x + battWidth - 2, y + 1, x + battWidth - 2, y + rect.height - 2);
-  renderer.drawPixel(x + battWidth - 1, y + 3);
-  renderer.drawPixel(x + battWidth - 1, y + rect.height - 4);
-  renderer.drawLine(x + battWidth - 0, y + 4, x + battWidth - 0, y + rect.height - 5);
+    // Draw icon at rect.x
+    const int x = rect.x;
+    // Top line
+    renderer.drawLine(x + 1, y, x + battWidth - 3, y);
+    // Bottom line
+    renderer.drawLine(x + 1, y + rect.height - 1, x + battWidth - 3, y + rect.height - 1);
+    // Left line
+    renderer.drawLine(x, y + 1, x, y + rect.height - 2);
+    // Battery end
+    renderer.drawLine(x + battWidth - 2, y + 1, x + battWidth - 2, y + rect.height - 2);
+    renderer.drawPixel(x + battWidth - 1, y + 3);
+    renderer.drawPixel(x + battWidth - 1, y + rect.height - 4);
+    renderer.drawLine(x + battWidth - 0, y + 4, x + battWidth - 0, y + rect.height - 5);
 
-  // Draw bars
-  if (percentage > 10) {
-    renderer.fillRect(x + 2, y + 2, 3, rect.height - 4);
-  }
-  if (percentage > 40) {
-    renderer.fillRect(x + 6, y + 2, 3, rect.height - 4);
-  }
-  if (percentage > 70) {
-    renderer.fillRect(x + 10, y + 2, 3, rect.height - 4);
+    // Draw bars
+    if (percentage > 10) {
+      renderer.fillRect(x + 2, y + 2, 3, rect.height - 4);
+    }
+    if (percentage > 40) {
+      renderer.fillRect(x + 6, y + 2, 3, rect.height - 4);
+    }
+    if (percentage > 70) {
+      renderer.fillRect(x + 10, y + 2, 3, rect.height - 4);
+    }
   }
 }
 
@@ -168,11 +176,12 @@ void LyraTheme::drawHeader(const GfxRenderer& renderer, Rect rect, const char* t
 
   const bool showBatteryPercentage =
       SETTINGS.hideBatteryPercentage != CrossPointSettings::HIDE_BATTERY_PERCENTAGE::HIDE_ALWAYS;
+  const bool hideOnHighPercentage = SETTINGS.showBatteryStatus == CrossPointSettings::SHOW_BATTERY_STATUS::WHEN_LOW;
   // Position icon at right edge, drawBatteryRight will place text to the left
   const int batteryX = rect.x + rect.width - 12 - LyraMetrics::values.batteryWidth;
   drawBatteryRight(renderer,
                    Rect{batteryX, rect.y + 5, LyraMetrics::values.batteryWidth, LyraMetrics::values.batteryHeight},
-                   showBatteryPercentage);
+                   showBatteryPercentage, hideOnHighPercentage);
 
   int maxTitleWidth =
       rect.width - LyraMetrics::values.contentSidePadding * 2 - (subtitle != nullptr ? maxSubtitleWidth : 0);

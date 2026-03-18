@@ -131,6 +131,8 @@ class CrossPointSettings {
   // Hide battery percentage
   enum HIDE_BATTERY_PERCENTAGE { HIDE_NEVER = 0, HIDE_READER = 1, HIDE_ALWAYS = 2, HIDE_BATTERY_PERCENTAGE_COUNT };
 
+  enum SHOW_BATTERY_STATUS { ALWAYS = 0, WHEN_LOW = 1 };
+
   // UI Theme
   enum UI_THEME { CLASSIC = 0, LYRA = 1, LYRA_3_COVERS = 2 };
 
@@ -190,6 +192,7 @@ class CrossPointSettings {
   char opdsPassword[64] = "";
   // Hide battery percentage
   uint8_t hideBatteryPercentage = HIDE_NEVER;
+  uint8_t showBatteryStatus = ALWAYS;
   // Long-press chapter skip on side buttons
   uint8_t longPressChapterSkip = 1;
   // UI Theme
