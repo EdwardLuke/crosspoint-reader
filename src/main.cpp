@@ -111,6 +111,32 @@ EpdFont opendyslexic14ItalicFont(&opendyslexic_14_italic);
 EpdFont opendyslexic14BoldItalicFont(&opendyslexic_14_bolditalic);
 EpdFontFamily opendyslexic14FontFamily(&opendyslexic14RegularFont, &opendyslexic14BoldFont, &opendyslexic14ItalicFont,
                                        &opendyslexic14BoldItalicFont);
+
+EpdFont atkinsonhyperlegiblenext12RegularFont(&atkinsonhyperlegiblenext_12_regular);
+EpdFont atkinsonhyperlegiblenext12BoldFont(&atkinsonhyperlegiblenext_12_bold);
+EpdFont atkinsonhyperlegiblenext12ItalicFont(&atkinsonhyperlegiblenext_12_italic);
+EpdFont atkinsonhyperlegiblenext12BoldItalicFont(&atkinsonhyperlegiblenext_12_bolditalic);
+EpdFontFamily atkinsonhyperlegiblenext12FontFamily(&atkinsonhyperlegiblenext12RegularFont, &atkinsonhyperlegiblenext12BoldFont, &atkinsonhyperlegiblenext12ItalicFont,
+                                   &atkinsonhyperlegiblenext12BoldItalicFont);
+EpdFont atkinsonhyperlegiblenext14RegularFont(&atkinsonhyperlegiblenext_14_regular);
+EpdFont atkinsonhyperlegiblenext14BoldFont(&atkinsonhyperlegiblenext_14_bold);
+EpdFont atkinsonhyperlegiblenext14ItalicFont(&atkinsonhyperlegiblenext_14_italic);
+EpdFont atkinsonhyperlegiblenext14BoldItalicFont(&atkinsonhyperlegiblenext_14_bolditalic);
+EpdFontFamily atkinsonhyperlegiblenext14FontFamily(&atkinsonhyperlegiblenext14RegularFont, &atkinsonhyperlegiblenext14BoldFont, &atkinsonhyperlegiblenext14ItalicFont,
+                                   &atkinsonhyperlegiblenext14BoldItalicFont);
+EpdFont atkinsonhyperlegiblenext16RegularFont(&atkinsonhyperlegiblenext_16_regular);
+EpdFont atkinsonhyperlegiblenext16BoldFont(&atkinsonhyperlegiblenext_16_bold);
+EpdFont atkinsonhyperlegiblenext16ItalicFont(&atkinsonhyperlegiblenext_16_italic);
+EpdFont atkinsonhyperlegiblenext16BoldItalicFont(&atkinsonhyperlegiblenext_16_bolditalic);
+EpdFontFamily atkinsonhyperlegiblenext16FontFamily(&atkinsonhyperlegiblenext16RegularFont, &atkinsonhyperlegiblenext16BoldFont, &atkinsonhyperlegiblenext16ItalicFont,
+                                   &atkinsonhyperlegiblenext16BoldItalicFont);
+EpdFont atkinsonhyperlegiblenext18RegularFont(&atkinsonhyperlegiblenext_18_regular);
+EpdFont atkinsonhyperlegiblenext18BoldFont(&atkinsonhyperlegiblenext_18_bold);
+EpdFont atkinsonhyperlegiblenext18ItalicFont(&atkinsonhyperlegiblenext_18_italic);
+EpdFont atkinsonhyperlegiblenext18BoldItalicFont(&atkinsonhyperlegiblenext_18_bolditalic);
+EpdFontFamily atkinsonhyperlegiblenext18FontFamily(&atkinsonhyperlegiblenext18RegularFont, &atkinsonhyperlegiblenext18BoldFont, &atkinsonhyperlegiblenext18ItalicFont,
+                                   &atkinsonhyperlegiblenext18BoldItalicFont);
+
 #endif  // OMIT_FONTS
 
 EpdFont smallFont(&notosans_8_regular);
@@ -213,6 +239,10 @@ void setupDisplayAndFonts() {
   renderer.insertFont(BOOKERLY_16_FONT_ID, bookerly16FontFamily);
   renderer.insertFont(BOOKERLY_18_FONT_ID, bookerly18FontFamily);
 
+  renderer.insertFont(ATKINSONHYPERLEGIBLENEXT_12_FONT_ID, notosans12FontFamily);
+  renderer.insertFont(ATKINSONHYPERLEGIBLENEXT_14_FONT_ID, notosans14FontFamily);
+  renderer.insertFont(ATKINSONHYPERLEGIBLENEXT_16_FONT_ID, notosans16FontFamily);
+  renderer.insertFont(ATKINSONHYPERLEGIBLENEXT_18_FONT_ID, notosans18FontFamily);
   renderer.insertFont(NOTOSANS_12_FONT_ID, notosans12FontFamily);
   renderer.insertFont(NOTOSANS_14_FONT_ID, notosans14FontFamily);
   renderer.insertFont(NOTOSANS_16_FONT_ID, notosans16FontFamily);

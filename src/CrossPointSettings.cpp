@@ -332,5 +332,17 @@ int CrossPointSettings::getReaderFontId() const {
         case EXTRA_LARGE:
           return OPENDYSLEXIC_14_FONT_ID;
       }
+    case ATKINSONHYPERLEGIBLENEXT:
+      switch (fontSize) {
+        case SMALL:
+          return ATKINSONHYPERLEGIBLENEXT_12_FONT_ID;
+        case MEDIUM:
+        default:
+          return ATKINSONHYPERLEGIBLENEXT_14_FONT_ID;
+        case LARGE:
+          return ATKINSONHYPERLEGIBLENEXT_16_FONT_ID;
+        case EXTRA_LARGE:
+          return ATKINSONHYPERLEGIBLENEXT_18_FONT_ID;
+      }
   }
 }

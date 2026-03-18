@@ -1,5 +1,21 @@
 #pragma once
 
+#include <builtinFonts/atkinsonhyperlegiblenext_12_bold.h>
+#include <builtinFonts/atkinsonhyperlegiblenext_12_bolditalic.h>
+#include <builtinFonts/atkinsonhyperlegiblenext_12_italic.h>
+#include <builtinFonts/atkinsonhyperlegiblenext_12_regular.h>
+#include <builtinFonts/atkinsonhyperlegiblenext_14_bold.h>
+#include <builtinFonts/atkinsonhyperlegiblenext_14_bolditalic.h>
+#include <builtinFonts/atkinsonhyperlegiblenext_14_italic.h>
+#include <builtinFonts/atkinsonhyperlegiblenext_14_regular.h>
+#include <builtinFonts/atkinsonhyperlegiblenext_16_bold.h>
+#include <builtinFonts/atkinsonhyperlegiblenext_16_bolditalic.h>
+#include <builtinFonts/atkinsonhyperlegiblenext_16_italic.h>
+#include <builtinFonts/atkinsonhyperlegiblenext_16_regular.h>
+#include <builtinFonts/atkinsonhyperlegiblenext_18_bold.h>
+#include <builtinFonts/atkinsonhyperlegiblenext_18_bolditalic.h>
+#include <builtinFonts/atkinsonhyperlegiblenext_18_italic.h>
+#include <builtinFonts/atkinsonhyperlegiblenext_18_regular.h>
 #include <builtinFonts/bookerly_12_bold.h>
 #include <builtinFonts/bookerly_12_bolditalic.h>
 #include <builtinFonts/bookerly_12_italic.h>

@@ -116,6 +116,42 @@ ruby -rdigest -e 'puts [
 ].map{|f| Digest::SHA256.hexdigest(File.read(f)).to_i(16) }.sum % (2 ** 32) - (2 ** 31)'
 ))"
 
+echo "#define ATKINSONHYPERLEGIBLENEXT_12_FONT_ID ($(
+ruby -rdigest -e 'puts [
+  "./atkinsonhyperlegiblenext_12_regular.h",
+  "./atkinsonhyperlegiblenext_12_bold.h",
+  "./atkinsonhyperlegiblenext_12_bolditalic.h",
+  "./atkinsonhyperlegiblenext_12_italic.h",
+].map{|f| Digest::SHA256.hexdigest(File.read(f)).to_i(16) }.sum % (2 ** 32) - (2 ** 31)'
+))"
+
+echo "#define ATKINSONHYPERLEGIBLENEXT_14_FONT_ID ($(
+ruby -rdigest -e 'puts [
+  "./atkinsonhyperlegiblenext_14_regular.h",
+  "./atkinsonhyperlegiblenext_14_bold.h",
+  "./atkinsonhyperlegiblenext_14_bolditalic.h",
+  "./atkinsonhyperlegiblenext_14_italic.h",
+].map{|f| Digest::SHA256.hexdigest(File.read(f)).to_i(16) }.sum % (2 ** 32) - (2 ** 31)'
+))"
+
+echo "#define ATKINSONHYPERLEGIBLENEXT_16_FONT_ID ($(
+ruby -rdigest -e 'puts [
+  "./atkinsonhyperlegiblenext_16_regular.h",
+  "./atkinsonhyperlegiblenext_16_bold.h",
+  "./atkinsonhyperlegiblenext_16_bolditalic.h",
+  "./atkinsonhyperlegiblenext_16_italic.h",
+].map{|f| Digest::SHA256.hexdigest(File.read(f)).to_i(16) }.sum % (2 ** 32) - (2 ** 31)'
+))"
+
+echo "#define ATKINSONHYPERLEGIBLENEXT_18_FONT_ID ($(
+ruby -rdigest -e 'puts [
+  "./atkinsonhyperlegiblenext_18_regular.h",
+  "./atkinsonhyperlegiblenext_18_bold.h",
+  "./atkinsonhyperlegiblenext_18_bolditalic.h",
+  "./atkinsonhyperlegiblenext_18_italic.h",
+].map{|f| Digest::SHA256.hexdigest(File.read(f)).to_i(16) }.sum % (2 ** 32) - (2 ** 31)'
+))"
+
 echo "#define UI_10_FONT_ID ($(
 ruby -rdigest -e 'puts [
   "./ubuntu_10_regular.h",
