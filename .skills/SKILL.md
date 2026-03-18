@@ -697,7 +697,7 @@ renderer.drawText(FONT_UI, x, y, tr(STR_LOADING), true);
 
 **To add custom fonts**:
 1. Place source fonts in `lib/EpdFont/fontsrc/` (gitignored)
-2. Run conversion script (see `lib/EpdFont/README`)
+2. Run conversion script
 3. Update global font objects in `src/main.cpp:40-115`
 4. Add font ID constant to `src/fontIds.h`
 
